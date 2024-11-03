@@ -1,5 +1,7 @@
 import SearchForm from "@/components/SearchForm";
-import StartUpCard from "@/components/StartUpCard";
+import StartUpCard, { StartUpCardType } from "@/components/StartUpCard";
+import { client } from "@/sanity/lib/client";
+import { startupsQuery } from "@/sanity/lib/queries";
 
 export default async function Home({
   searchParams,
@@ -7,20 +9,8 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const query = (await searchParams).query;
+  const posts = await client.fetch(startupsQuery);
 
-  const posts = [
-    {
-      _created_at: new Date(),
-      views: 53,
-      author: { _id: 1, name: "Zee" },
-      _id: 1,
-      description: "This is a comment",
-      image:
-        "https://media.assettype.com/analyticsinsight%2F2024-07%2Fb20442aa-0dc3-40ed-a3bb-6e6083f933ca%2FTop_10_Personal_Robots_that_You_Can_Buy_in_2023.jpg",
-      category: "Robots",
-      title: "We Robots",
-    },
-  ];
   return (
     <>
       <section className="pink_container">
